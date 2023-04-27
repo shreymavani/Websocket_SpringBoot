@@ -18,7 +18,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/files', function (greeting) {
+        stompClient.subscribe('/topic/files', function (greeting) {                 //Subcriber of a topic/files that we have specified in FileController
             showGreeting(greeting);
         });
     });
@@ -33,8 +33,8 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/file", {}, JSON.stringify({'name': $("#name").val()}));
-}
+    stompClient.send("/app/file", {}, JSON.stringify({'name': $("#name").val()}));        //If you want to send a argument to server,/app(prefex)/file(path) is also specified in FileController
+}                                       //Here the argument JSON.stringify is redundant
 
 function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message.message + "</td></tr>");

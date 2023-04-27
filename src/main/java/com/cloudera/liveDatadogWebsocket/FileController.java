@@ -16,8 +16,8 @@ public class FileController {
     @Autowired
     private SimpMessagingTemplate template;
 
-    @MessageMapping("/file")   //Not required just to send a file.If you want to any argument from the UI and send it to the function then only it should be set.
-    @SendTo("/topic/files")
+    @MessageMapping("/file")   //Mapping of path on which client's argument going to direct to this function
+    @SendTo("/topic/files")    //Mapping of path on which client going to receive the data on
     public String sendFile() throws Exception {
         // Load the text file from the local system
         System.out.println("inside the sendfile");
