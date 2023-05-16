@@ -17,8 +17,8 @@ public class FileController {
     private SimpMessagingTemplate template;
 
     @MessageMapping("/file")   //Mapping of path on which client's argument going to direct to this function
-    @SendTo("/topic/files")    //Mapping of path on which client going to receive the data on
-    public String sendFile() throws Exception {
+//    @SendTo("/topic/files")    //Mapping of path on which client going to receive the data on
+    public void sendFile() throws Exception {
         // Load the text file from the local system
         System.out.println("inside the sendfile");
         File file = new File("/Users/smavani/INPUT_OUTPUT_FOR_TESTING/YarnJobData/Sample.txt");
@@ -33,9 +33,8 @@ public class FileController {
         String fileData = stringBuilder.toString();
 
         // Send the file data to the subscribed clients
-        this.template.convertAndSend("/topic/file", fileData);
-        return fileData;
+        template.convertAndSend("/topic/files", fileData);
+//        return fileData;
     }
 
 }
-

@@ -9,7 +9,7 @@ function setConnected(connected) {
     else {
         $("#conversation").hide();
     }
-    $("#greetings").html("");
+    $("#message").html("");
 }
 
 function connect() {
@@ -18,8 +18,8 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/files', function (greeting) {                 //Subcriber of a topic/files that we have specified in FileController
-            showGreeting(greeting);
+        stompClient.subscribe('/topic/files', function (messaging) {
+            showMessaging(JSON.parse(messaging));
         });
     });
 }
@@ -33,11 +33,11 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/file", {}, JSON.stringify({'name': $("#name").val()}));        //If you want to send a argument to server,/app(prefex)/file(path) is also specified in FileController
-}                                       //Here the argument JSON.stringify is redundant
+    stompClient.send("/app/file", {}, JSON.stringify({'name': $("#name").val()}));
+}
 
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message.message + "</td></tr>");
+function showMessaging(message) {
+    $("#message").append("<tr><td>" + message + "</td></tr>");
 }
 
 $(function () {
@@ -48,4 +48,3 @@ $(function () {
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
 });
-
